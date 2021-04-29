@@ -1,0 +1,89 @@
+
+.container-rol {
+  margin-top: 120px;
+}
+
+
+.container-rol > .container > .row> .caja1{
+  background-color:#4285F4;
+  height: 20vh;
+  margin-right: 1.5%;
+  margin-bottom: 1.5%;
+}
+
+.container-rol > .container > .row> .caja2{
+  background-color: #00C851;
+  height: 20vh;
+  margin-right: 1.5%;
+  margin-bottom: 1.5%;
+}
+
+.container-rol > .container > .row> .caja3{
+  background-color:#3E4551;
+  height: 20vh;
+  margin-right: 1.5%;
+  margin-bottom: 1.5%;
+}
+
+.container-rol > .container > .row> .caja4{
+  background-color: #3E4551 ;
+  height: 20vh;
+  margin-right: 1.5%;
+  margin-bottom: 1.5%;
+}
+
+.container-rol > .container > .row> .caja5{
+  background-color:#4285F4;
+  height: 20vh;
+  margin-right: 1.5%;
+  margin-bottom: 1.5%;
+}
+
+.container-rol > .container > .row> .caja6{
+  background-color: #00C851;
+  height: 20vh;
+  margin-right: 1.5%;
+  margin-bottom: 1.5%;
+}
+.container-rol > .container > .row> .caja7{
+  background-color: #00C851;
+  height: 20vh;
+  margin-right: 1.5%;
+  margin-bottom: 1.5%;
+}
+.container-rol > .container > .row> .caja8{
+  background-color: #3E4551;
+  height: 20vh;
+  margin-right: 1.5%;
+  margin-bottom: 1.5%;
+}
+.container-rol > .container > .row> .caja9{
+  background-color: #4285F4;
+  height: 20vh;
+  margin-right: 1.5%;
+  margin-bottom: 1.5%;
+}
+
+
+.icon-rol, .icon-tipo-empleado {
+  color: white;
+  width: 50%;
+  height:100px;
+  margin-left: 25%;
+}
+
+.container-rol > .container > .row> .caja1:hover, 
+.container-rol > .container > .row> .caja2:hover, 
+.container-rol > .container > .row> .caja3:hover, 
+.container-rol > .container > .row> .caja4:hover, 
+.container-rol > .container > .row> .caja5:hover, 
+.container-rol > .container > .row> .caja6:hover,
+.container-rol > .container > .row> .caja7:hover,
+.container-rol > .container > .row> .caja8:hover,
+.container-rol > .container > .row> .caja9:hover
+{
+  cursor: pointer;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transform: scale(1.1);
+  transition: .8s;
+}

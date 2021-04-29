@@ -1,0 +1,55 @@
+
+.container-principal {
+  margin-top: 40px;
+}
+
+.caja1,.caja2, .caja4, .caja5 {
+  height: 200px;
+  margin-right: 20px;
+}
+
+.nivel2 {
+  margin-top: 20px;
+}
+.caja1{
+  background-color: rgba(4, 1, 151, 0.89);
+  opacity: .9;
+}
+
+.caja2{
+  background-color: rgba(151, 31, 1, 0.89);
+  opacity: .9;
+}
+
+.caja3{
+  background-color: rgba(1, 91, 151, 0.479);
+  opacity: .9;
+}
+
+.caja4{
+  background-color: rgba(36, 19, 65, 0.89);
+  opacity: .9;
+}
+
+.caja5{
+  background-color: rgba(41, 97, 55, 0.89);
+  opacity: .9;
+}
+
+.caja6{
+  background-color: rgba(4, 1, 151, 0.89);
+  opacity: .9;
+}
+
+.icon-huesped, .icon-habitacion, .icon-comedor,
+.icon-reserva, .icon-addCliente, .icon-reporte {
+  color: white;
+  width: 50%;
+  height: 50%;
+  margin-left: 25%;
+}
+
+.caja1:hover, .caja2:hover, .caja3:hover, 
+.caja5:hover, .caja4:hover, .caja6:hover{
+  opacity: 1;
+}

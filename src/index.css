@@ -5,9 +5,23 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('../src/assets/fundador.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(4px) ;
+height: 111vh;
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+@media (max-width: 800px) {
+  body {
+    background:rgb(56, 55, 55);
+  }
+}
+

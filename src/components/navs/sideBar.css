@@ -1,0 +1,65 @@
+.sidenav{
+ 
+    width: 240px;
+    background: #011627;
+    position: absolute;
+    height: 105vh;
+    padding: 0 30px;
+    transition: all 2s;
+    left: -100%;
+    z-index: 100;
+   
+}
+
+.sidenav.active {
+  left: 0;
+  transition: all 1s;
+}
+.logo {
+  width: 150px;
+  border-radius: 100px;
+  margin-left: 25px;
+  margin-top: 20px;
+}
+
+  ul{
+    padding: 0;
+  
+  }
+
+  ul li{
+    list-style-type: none;
+    margin: 10px 0;
+  }
+
+  ul li a  {
+    color: #eaecef;
+    text-decoration: none;
+    font-size: 20px;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 6px;
+
+  }
+
+  ul li a:hover,
+  ul li a.active {
+    background: #172b4d;
+    color: wheat;
+    transform: scale(1.1);
+    transition: .8s;
+  }
+.dropdown-links {
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dropdowns-menu {
+  margin: 1rem 0 0 1rem;
+  display: none;
+}
+
+.dropdowns-menu.active {
+  display: block;
+}
