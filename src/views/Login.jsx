@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 const axios = require('axios')
 
 const Login = () => {
@@ -9,7 +8,7 @@ const Login = () => {
   const [contrasena, setContrasena] = useState('')
   const [loginStatus, setLoginStatus] = useState(false)
   const { handleSubmit } = useForm()
-  const [rol, setRole] = useState('')
+
 
   const login = async () => {
    await axios.post('https://hostalservidor.herokuapp.com/login', {

@@ -16,10 +16,11 @@ const HostalMenu = () => {
       <div className="container nivel1">
         <div className="row ">
 
+          
           <div className="col-lg-2 caja1 offset-lg-3">
 
             <h4 className="text-center text-white mt-4">Hueped</h4>
-            <AiOutlineUsergroupAdd className="icon-huesped" />
+           <Link to="/huesped"> <AiOutlineUsergroupAdd className="icon-huesped" size="6em" /></Link>
           </div>
           <div className="col-lg-2 caja2">
             <h4 className="text-center text-white mt-4">Habitaciones</h4>
@@ -35,11 +36,11 @@ const HostalMenu = () => {
         <div className="row">
           <div className="col-lg-2 caja4 offset-lg-3">
             <h4 className="text-center text-white mt-4">Reservas/OC</h4>
-            <ImAddressBook className="icon-reserva" />
+            <Link to="/reserva"> <ImAddressBook className="icon-reserva" /></Link>
           </div>
           <div className="col-lg-2 caja5" >
             <h4 className="text-center text-white mt-4">Registrar Empresa</h4>
-            <Link to="/agregar-cliente"><IoMdPersonAdd className="icon-addCliente" /></Link>
+            <Link to="/agregarEmpresa"><IoMdPersonAdd className="icon-addCliente" /></Link>
           </div>
           <div className="col-lg-2 caja6" >
             <h4 className="text-center text-white mt-4">Reportes</h4>

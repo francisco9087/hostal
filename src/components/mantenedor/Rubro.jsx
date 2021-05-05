@@ -1,44 +1,44 @@
 import React, { useEffect, useState } from 'react'
-import { RiReservedLine } from 'react-icons/ri'
+import { BsCardHeading } from 'react-icons/bs'
 import { Modal } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { MdDeleteForever } from 'react-icons/md'
 import { BsPencilSquare } from 'react-icons/bs'
-import swal from 'sweetalert'
+import swal from 'sweetalert' 
 const axios = require('axios')
 
-const EstadoReserva = () => {
+
+const Rubro = () => {
+
   const [showTable, setShowTable] = useState(false)
   const handleShowTable = () => setShowTable(true)
   const handleCloseTable = () => setShowTable(false)
+
   const [showFormulario, setShowFormulario] = useState(false)
   const handleShowFormulario = () => {
     setShowFormulario(true)
     setModoEdicion(false)
-  }
-
-  const limpiarInput = () => setDescripcion('')
-  const handleCloseFormulario = () => {
-    setShowFormulario(false)
     limpiarInput()
   }
-
-  const [estadoReserva, setEstadoReserva] = useState([])
-  const [descripcion, setDescripcion] = useState('')
-  const [idEstadoReserva, setIdEstadoReserva] = useState('')
-  const [modoEdicion, setModoEdicion] = useState(false)
+  const handleCloseFormulario = () => setShowFormulario(false)
   const { handleSubmit } = useForm()
+  const [modoEdicion, setModoEdicion] = useState([])
 
+  const [rubro, setRubro] = useState([])
+  const [descripcion, setDescripcion] = useState('')
+  const [idRubro, setIdRubro] = useState('')
+
+  const limpiarInput = () => setDescripcion('')
 
   useEffect(() => {
-    axios.get('https://hostalservidor.herokuapp.com/obtenerEstadoReserva')
+    axios.get('http://hostalservidor.herokuapp.com/obtenerRubro')
       .then(response => {
-        setEstadoReserva(response.data)
+        setRubro(response.data)
       })
   }, [])
 
-  const agregarEstadoReserva = () => {
-    axios.post('http://hostalservidor.herokuapp.com/agregarEstadoReserva', {
+  const agregarRubro = () => {
+    axios.post('http://hostalservidor.herokuapp.com/agregarRubro', {
       descripcion: descripcion
     })
     handleCloseFormulario()
@@ -47,85 +47,85 @@ const EstadoReserva = () => {
   const activarModoEdicion = (item) => {
     handleShowFormulario()
     setModoEdicion(true)
-    setIdEstadoReserva(item.id_tipo_usuario)
+    setIdRubro(item.id_rubro)
     setDescripcion(item.descripcion)
   }
 
-  const editarEstadoReserva = () => {
-    axios.put(`http://hostalservidor.herokuapp.com/updateEstadoReserva/${idEstadoReserva}`, {
-      id_detalle_reserva: idEstadoReserva,
+  const editarRubro = () => {
+    axios.put(`http://hostalservidor.herokuapp.com/updateRubro/${idRubro}`, {
+      id_rubro: idRubro,
       descripcion: descripcion
     })
     handleCloseFormulario()
   }
 
   const onSubmit = (data) => {
-    modoEdicion ? editarEstadoReserva() : agregarEstadoReserva()
+    modoEdicion ? editarRubro() : agregarRubro()
   }
 
-
-  const eliminarEstadoReserva = (idEstadoReserva) => {
-    swal({
-      title: 'ELIMINAR ESTADO RESERVA',
-      text: 'esta seguro que lo desea eliminar',
+  const eliminarRubro = async (idRubro) => {
+    await swal({
+      title: 'ELIMINAR RUBRO',
+      text: 'esta seguro que desea eliminar',
       icon: 'warning',
       buttons: ['cancelar', 'aceptar']
     }).then(response => {
       if (response) {
-        axios.delete(`http://hostalservidor.herokuapp.com/deleteEstadoReserva/${idEstadoReserva}`)
+        axios.delete(`http://hostalservidor.herokuapp.com/deleteRubro/${idRubro}`)
         swal({ text: 'eliminado con exito', icon: 'success', timer: '2000' })
       }
     })
+    
   }
-
 
   return (
     <div>
-      <h4 className="text-center text-white mt-4">Estado Reserva</h4>
-      <RiReservedLine
+      <h4 className="text-center text-white mt-4">Rubro</h4>
+      <BsCardHeading
         color="white"
         size="6em"
         className="row mx-auto mt-3"
         title="Presiona para ingresar un tipo de habitacion nuevo"
         onClick={handleShowTable}
       />
+
       <Modal
         show={showTable}
         centered
         onHide={handleCloseTable}
-        size="xl"
+        size='xl'
       >
-        <Modal.Header className="bg-dark">
-          <Modal.Title className="text-white mx-auto text-uppercase">Estado Reserva</Modal.Title>
+        <Modal.Header className="bg-dark ">
+          <Modal.Title className="text-white text-uppercase mx-auto">Rubro</Modal.Title>
           <p className="text-white mt-2" onClick={handleCloseTable} style={{ cursor: 'pointer' }}>X</p>
         </Modal.Header>
         <Modal.Body>
           <div className="container">
             <div className="row">
               <div className="col-lg-4 offset-lg-8">
-                <button className="btn btn-success" onClick={handleShowFormulario}>Agregar estado reserva</button>
+                <button className="btn btn-success" onClick={handleShowFormulario}>Agregar Rubro</button>
               </div>
-              <div className="col-lg-10 offset-lg-1 mt-3">
+              <div className="col-lg-10 offset-lg-1 mt-5">
                 <table className="table">
                   <thead className="table-dark text-uppercase">
                     <tr>
                       <th>Identificador</th>
-                      <th>Estado Reserva</th>
+                      <th>Rubro</th>
                       <th>Opciones</th>
                     </tr>
                   </thead>
                   <tbody>
                     {
-                      estadoReserva.map(item => {
+                      rubro.map(item => {
                         return (
-                          <tr key={item.id_detalle_reserva}>
-                            <td>{item.id_detalle_reserva}</td>
+                          <tr key={item.id_rubro}>
+                            <td>{item.id_rubro}</td>
                             <td>{item.descripcion}</td>
                             <td>
                               <MdDeleteForever
                                 size="2em" color="red"
-                                onClick={() => eliminarEstadoReserva(item.id_detalle_reserva)}
-                                style={{ cursor: 'pointer', marginRight: '12px' }}
+                                onClick={() => eliminarRubro(item.id_rubro)}
+                                style={{ cursor:'pointer', marginRight: '12px' }}
                               />
                               <BsPencilSquare
                                 size="1.8em" color="orange"
@@ -151,21 +151,24 @@ const EstadoReserva = () => {
         centered
         onHide={handleCloseFormulario}
       >
-        <Modal.Header className={modoEdicion ? 'bg-warning' : 'bg-success'}>
-          <Modal.Title className="text-white mx-auto text-uppercase">{modoEdicion ?  'Editar Estado Reserva' :'Agregar Estado Reserva' }</Modal.Title>
+        <Modal.Header className={modoEdicion ? "bg-warning" : "bg-success"}>
+          <Modal.Title className="text-white text-uppercase mx-auto">{modoEdicion ? 'Editar Rubro' :  'Agregar Rubro'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} >
             <label htmlFor=""></label>
-            <input
-              type="text"
-              className="form-control"
-              onChange={e => setDescripcion(e.target.value)}
+            <input 
+              type="text" 
+              className="form-control" 
+              onChange={(e) => setDescripcion(e.target.value)}
               value={descripcion}
+
             />
             <hr />
             <div className="btn-toolbar float-end">
-              <button className="btn btn-success btn-group">Agregar</button>
+              <button className={modoEdicion ? "btn btn-warning btn-group" : "btn btn-success btn-group"}>
+                {modoEdicion ? 'Editar' : 'Agregar'}
+              </button>
             </div>
           </form>
 
@@ -177,4 +180,4 @@ const EstadoReserva = () => {
   )
 }
 
-export default EstadoReserva
+export default Rubro

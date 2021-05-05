@@ -94,8 +94,9 @@ const TipoPlato = () => {
         onHide={handleCloseTable}
         size="xl"
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Tipo Producto</Modal.Title>
+        <Modal.Header className="bg-dark">
+          <Modal.Title className="text-white mx-auto tex-uppercase">Tipo Plato</Modal.Title>
+          <p className="text-white mt-2" onClick={handleCloseTable} style={{ cursor: 'pointer' }}>X</p>
         </Modal.Header>
         <Modal.Body>
           <div className="container">
@@ -117,12 +118,22 @@ const TipoPlato = () => {
                       tipoPlato.map(item => {
                         console.log(item)
                         return(
-                          <tr>
+                          <tr key={item.id_tipo}>
                             <td>{item.id_tipo}</td>
                             <td>{item.descripcion}</td>
                             <td>
-                              <MdDeleteForever size="1.8em" color="red" onClick={() => eliminarTipoPlato(item.id_tipo)}/>
-                              <BsPencilSquare size="1.8em" color="orange" onClick={() => activarModoEdicion(item)}/>
+                              <MdDeleteForever 
+                                size="1.8em" 
+                                color="red" 
+                                onClick={() => eliminarTipoPlato(item.id_tipo)}
+                                style={{ cursor:'pointer', marginRight: '12px' }}
+                              />
+                              <BsPencilSquare
+                                size="1.8em" 
+                                color="orange" 
+                                onClick={() => activarModoEdicion(item)}
+                                style={{ cursor:'pointer' }}  
+                              />
                             </td>
                           </tr>
                         )

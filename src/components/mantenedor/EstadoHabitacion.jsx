@@ -4,7 +4,7 @@ import { Modal } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { MdDeleteForever } from 'react-icons/md'
 import { BsPencilSquare } from 'react-icons/bs'
-
+import swal from 'sweetalert'
 const axios = require('axios')
 
 
@@ -21,9 +21,7 @@ const EstadoHabitacion = () => {
     setModoEdicion(false)
     limpiarInput()
   }
-  const handleCloseFormulario = () => {
-    setShowFormulario(false)
-  }
+  const handleCloseFormulario = () => setShowFormulario(false)
 
   const [modoEdicion, setModoEdicion] = useState([])
 
@@ -44,6 +42,7 @@ const EstadoHabitacion = () => {
     axios.post('http://hostalservidor.herokuapp.com/agregarEstadoHabitacion', {
       descripcion: descripcion
     })
+    handleCloseFormulario()
   }
 
   const activarModoEdicion = (item) => {
@@ -65,8 +64,19 @@ const EstadoHabitacion = () => {
     modoEdicion ? editarEstadoHabitacion() : agregarEstadoHabitacion()
   }
 
-  const eliminarEstadoHabitacion = (idEstadoHabitacion) => {
-    axios.delete(`http://hostalservidor.herokuapp.com/${idEstadoHabitacion}`)
+  const eliminarEstadoHabitacion =async (idEstadoHabitacion) => {
+    await swal({
+      title: 'ELIMINAR ESTADO HABITACIÓN',
+      text: 'esta seguro que desea eliminar',
+      icon: 'warning',
+      buttons: ['cancelar', 'aceptar']
+    }).then(response => {
+      if (response) {
+        axios.delete(`http://hostalservidor.herokuapp.com/${idEstadoHabitacion}`)
+        swal({ text: 'eliminado con exito', icon: 'success', timer: '2000' })
+      }
+    })
+   
   }
 
   return (
@@ -85,8 +95,9 @@ const EstadoHabitacion = () => {
         onHide={handleCloseTable}
         size='xl'
       >
-        <Modal.Header closeButton>
-          <Modal.Title className="text-uppercase mx-auto">estado Habitación</Modal.Title>
+        <Modal.Header className="bg-dark">
+          <Modal.Title className="text-white text-uppercase mx-auto">estado Habitación</Modal.Title>
+          <p className="text-white mt-2" onClick={handleCloseTable} style={{ cursor: 'pointer' }}>X</p>
         </Modal.Header>
         <Modal.Body>
           <div className="container">
@@ -94,31 +105,32 @@ const EstadoHabitacion = () => {
               <div className="col-lg-4 offset-lg-8">
                 <button className="btn btn-success" onClick={handleShowFormulario}>Agregar estado Habitación</button>
               </div>
-              <div className="col-lg-10 offset-lg-1 mt-3">
+              <div className="col-lg-10 offset-lg-1 mt-5">
                 <table className="table">
-                  <thead className="table-dark">
+                  <thead className="table-dark text-uppercase">
                     <tr>
-                      <th className="text-uppercase">Identificador</th>
-                      <th className="text-uppercase">estado Habitación</th>
-                      <th className="text-uppercase">opciones</th>
+                      <th>Identificador</th>
+                      <th>estado Habitación</th>
+                      <th>opciones</th>
                     </tr>
                   </thead>
                   <tbody>
                     {
                       estadoHabitacion.map(item => {
                         return (
-                          <tr>
+                          <tr key={item.id_estado_habitacion}>
                             <td>{item.id_estado_habitacion}</td>
                             <td>{item.descripcion}</td>
                             <td>
                               <MdDeleteForever size="1.8em" color="red"
                                 onClick={() => eliminarEstadoHabitacion(item.id_estado_habitacion)}
-
+                                style={{ cursor:'pointer', marginRight: '12px' }}
                               />
                               <BsPencilSquare
                                 size="1.8em"
                                 color="orange"
                                 onClick={() => activarModoEdicion(item)}
+                                style={{ cursor:'pointer' }}
                               />
                             </td>
                           </tr>
@@ -138,8 +150,8 @@ const EstadoHabitacion = () => {
         centered
         onHide={handleCloseFormulario}
       >
-        <Modal.Header closeButton>
-          <Modal.Title className="text-uppercase mx-auto">{modoEdicion ? 'Editar estado Habitación' : 'Agregar estado Habitación'}</Modal.Title>
+        <Modal.Header className={modoEdicion ? "bg-warning" : "bg-success"}>
+          <Modal.Title className="text-uppercase mx-auto text-white">{modoEdicion ? 'Editar estado Habitación' : 'Agregar estado Habitación'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit(onSubmit)}>

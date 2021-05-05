@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { BsPersonBoundingBox } from 'react-icons/bs'
-import { MdDeleteForever, MdPauseCircleFilled } from 'react-icons/md'
+import { MdDeleteForever } from 'react-icons/md'
 import { BsPencilSquare } from 'react-icons/bs'
 import { useForm } from 'react-hook-form'
 import swal from 'sweetalert'
@@ -93,9 +93,15 @@ const TipoEmpleado = (props) => {
           onClick={handleShowTable}
         />
 
-        <Modal show={showTable} onHide={handleCloseTable} centered size="xl" >
-          <Modal.Header className="bg-primary " closeButton>
+        <Modal 
+          show={showTable} 
+          onHide={handleCloseTable} 
+          centered 
+          size="xl" 
+        >
+          <Modal.Header className="bg-dark ">
             <Modal.Title className="text-white text-uppercase mx-auto">Listado Tipo Empleado</Modal.Title>
+            <p className="text-white mt-2" onClick={handleCloseTable} style={{ cursor: 'pointer' }}>X</p>
           </Modal.Header>
           <Modal.Body>
             <div className="container">
@@ -105,18 +111,18 @@ const TipoEmpleado = (props) => {
                 </div>
                 <div className="col-lg-10 offset-lg-1 mt-5">
                   <table className="table">
-                    <thead className="bg-primary">
+                    <thead className="table-dark">
                       <tr>
-                        <th className="text-uppercase text-white">Identificador</th>
-                        <th className="text-uppercase text-white">Tipo empleado</th>
-                        <th className="text-uppercase text-white">Opciones</th>
+                        <th className="text-uppercase">Identificador</th>
+                        <th className="text-uppercase">Tipo empleado</th>
+                        <th className="text-uppercase">Opciones</th>
                       </tr>
                     </thead>
                     <tbody>
                       {
                         tipoEmpleado.map(item => {
                           return (
-                            <tr>
+                            <tr key={item.id_tipo_usuario}>
                               <td>{item.id_tipo_usuario}</td>
                               <td>{item.descripcion}</td>
                               <td>
@@ -124,7 +130,6 @@ const TipoEmpleado = (props) => {
                                   size="1.8em" color="red"
                                   onClick={() => eliminarTipoEmpleado(item.id_tipo_usuario)}
                                   style={{ cursor: 'pointer', marginRight: '12px' }}
-
                                 />
                                 <BsPencilSquare
                                   size="1.8em" color="orange"
@@ -153,7 +158,7 @@ const TipoEmpleado = (props) => {
           style={{ backdropFilter: 'blur(3px) ' }}
           className="shadow"
         >
-          <Modal.Header closeButton className={modoEdicion ? 'bg-warning' : 'bg-success' }>
+          <Modal.Header className={modoEdicion ? 'bg-warning' : 'bg-success' }>
             <Modal.Title className="mx-auto text-uppercase text-white">{modoEdicion ? 'Editar Tipo Empleado' : 'Agregar Tipo Empleado'}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -164,7 +169,6 @@ const TipoEmpleado = (props) => {
                 onChange={(e) => setDescripcion(e.target.value)}
                 value={descripcion}
                 className="form-control"
-                
               />
               <hr />
               <div className="btn-toolbar float-end">

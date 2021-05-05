@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { GiRollingDices } from 'react-icons/gi'
 import { useForm } from 'react-hook-form'
 const axios = require('axios')
 

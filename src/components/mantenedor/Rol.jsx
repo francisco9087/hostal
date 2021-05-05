@@ -31,23 +31,26 @@ const Rol = (props) => {
   };
   const fetchData = async () => {
     const request = await axios.get('https://hostalservidor.herokuapp.com/rol')
-    console.log(request.data)
-   
+  
     setRoles(request.data)
-   
+
     return request
-} 
-  useEffect( () => {
+  }
+  useEffect(() => {
     fetchData()
-     
+
   }, [])
 
   const agregarRol = () => {
     axios.post('http://hostalservidor.herokuapp.com/agregar-rol', {
+      id_rol: id_rol,
       descripcion: descripcion
     })
+
+   
+    // setRoles([...roles, {id_rol: id_rol, descripcion: descripcion}])
     handleClose()
-    
+
   }
 
   const activarModoEdicion = (item) => {
@@ -77,7 +80,7 @@ const Rol = (props) => {
       buttons: ['cancelar', 'aceptar']
     }).then(response => {
       if (response) {
-         axios.delete(`http://hostalservidor.herokuapp.com/eliminarROl/${id_rol}`)
+        axios.delete(`http://hostalservidor.herokuapp.com/eliminarROl/${id_rol}`)
         swal({ text: 'eliminado con exito', icon: 'success', timer: '2000' })
       }
     })
@@ -95,6 +98,7 @@ const Rol = (props) => {
           title="Presiona para ingresar un rol nuevo"
           className='row mx-auto'
           onClick={handleShowTable}
+          
         />
 
         {/* Modal Table info */}
@@ -105,12 +109,10 @@ const Rol = (props) => {
           size='xl'
 
         >
-          <Modal.Header style={{background: '#011627'}}>
-          
-            <Modal.Title className="text-white text-uppercase mx-auto">Listado Roles
-            
-            </Modal.Title>
-            <p className="text-white mt-2" onClick={handleCloseTable} style={{cursor:'pointer'}}>X</p>
+          <Modal.Header className="bg-dark">
+
+            <Modal.Title className="text-white text-uppercase mx-auto"> Listado Roles </Modal.Title>
+            <p className="text-white mt-2" onClick={handleCloseTable} style={{ cursor: 'pointer' }}>X</p>
           </Modal.Header>
           <Modal.Body>
             <div className="container">
@@ -118,13 +120,13 @@ const Rol = (props) => {
                 <div className="col-lg-4 offset-lg-8">
                   <button className="btn btn-success " onClick={handleShow}>Agregar rol</button>
                 </div>
-                <div className="col-lg-10 offset-lg-1 mt-3">
+                <div className="col-lg-10 offset-lg-1 mt-5">
                   <table className="table table-responsive">
-                    <thead style={{background: '#011627'}}>
+                    <thead className="table-dark text-uppercase">
                       <tr>
-                        <th className="text-uppercase text-white">Identificador</th>
-                        <th className="text-uppercase text-white">TIpo Rol</th>
-                        <th className="text-uppercase text-white">Opciones</th>
+                        {/* <th>Identificador</th> */}
+                        <th>TIpo Rol</th>
+                        <th>Opciones</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -132,20 +134,21 @@ const Rol = (props) => {
                       {
                         roles.map(item => {
                           return (
-                            <tr>
-                              <td>{item.id_rol}</td>
+                            <tr key={item.id_rol}>
+                              {/* <td>{item.id_rol}</td> */}
                               <td>{item.descripcion}</td>
                               <td>
                                 <MdDeleteForever
-                                  size="1.8em" color="red"
+                                  size="1.8em" 
+                                  color="red"
                                   onClick={() => eliminarRol(item.id_rol)}
                                   style={{ cursor: 'pointer', marginRight: '12px' }}
-                                  
+
                                 />
                                 <BsPencilSquare
                                   size="1.8em" color="orange"
                                   onClick={() => activarModoEdicion(item)}
-                                  style={{ cursor: 'pointer'}}
+                                  style={{ cursor: 'pointer' }}
                                 />
                               </td>
                             </tr>
@@ -191,7 +194,7 @@ const Rol = (props) => {
                 </div>
               </div>
             </form>
-              <button className="btn btn-danger btn-group me-2 float-end" onClick={handleClose}>CERRAR</button>
+            <button className="btn btn-danger btn-group me-2 float-end" onClick={handleClose}>CERRAR</button>
           </Modal.Body>
         </Modal>
       </>

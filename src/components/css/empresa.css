@@ -1,0 +1,12 @@
+.contenedor-add-empresa > .row > .contenedor-card-empresa > .card-empresa {
+  background:rgba(0, 0, 0, .80);
+}
+
+ .contenedor-tabla > .row > .contenedor-tabla-empresa > .card-tabla-empresa {
+  background: rgba(0, 0, 0, .80);
+}
+
+.contenedor-tabla > .contenedor-tabla-empresa > .card-tabla-empresa {
+  background: rgba(0, 0, 0, .80);
+  height: 390px;
+}

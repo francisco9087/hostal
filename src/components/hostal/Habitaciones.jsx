@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiBed } from 'react-icons/bi'
 import '../css/habitaciones.css'
+const axios = require('axios')
+
 const Habitaciones = () => {
   const habitacion = [
 
@@ -21,6 +23,15 @@ const Habitaciones = () => {
     { numero: "305", disponible: false },
   ]
 
+  const [habitaciones, setHabitaciones] = useState([])
+
+  useEffect(() => {
+    axios.get('http://hostalservidor.herokuapp.com/obtenerHabitacion')
+      .then(response => {
+        console.log(response.data)
+        setHabitaciones(response.data)
+      })
+  }, [])
 
   return (
 
@@ -29,23 +40,48 @@ const Habitaciones = () => {
 
         <div className="row justify-content-center">
 
-        
+
           {
-        habitacion.map(item => {
-         return (
-          <div className={ item.disponible === true ? "col-lg-2 mt-2 text-center contenedor-habi-num" : "col-lg-2 mt-2 text-center contenedor-habi-num-ocupado"} key={item.numero} >
-          <h5>Habitacion</h5>
-          <h6 className="text-center">{item.numero }</h6>
-          
-            <BiBed className="ico-habitacion" />
-            <h6 className="text-center" >{item.disponible === true ? 'Disponible' : 'Ocupado'}</h6>
-          </div>
-         )
-        })
-      }
-           
+            habitaciones.map(item => {
+              return (
+                <div
+                  className={
+                    item.id_estado_habitacion === 4 ? "col-lg-2 mt-2 text-center contenedor-habi-num" : "col-lg-2 mt-2 text-center contenedor-habi-num-ocupado"}
+                  key={item.id_habitacion}
+                >
+                  <h5>Habitacion</h5>
+                  <h6 className="text-center">{item.id_habitacion}</h6>
+                    <h6 className="text-center">{item.desc_habitacion}</h6>
+                  <BiBed className="ico-habitacion" />
+                  <h6 className="text-center" >{item.id_estado_habitacion === 4 ? 'Disponible' : 'Ocupado'}</h6>
+                </div>
+              )
+            })
+          }
+
+        </div>
       </div>
-      </div>
+      {/* <div className="container contenedor-habitaciones ">
+
+        <div className="row justify-content-center">
+
+
+          {
+            habitacion.map(item => {
+              return (
+                <div className={item.disponible === true ? "col-lg-2 mt-2 text-center contenedor-habi-num" : "col-lg-2 mt-2 text-center contenedor-habi-num-ocupado"} key={item.numero} >
+                  <h5>Habitacion</h5>
+                  <h6 className="text-center">{item.numero}</h6>
+
+                  <BiBed className="ico-habitacion" />
+                  <h6 className="text-center" >{item.disponible === true ? 'Disponible' : 'Ocupado'}</h6>
+                </div>
+              )
+            })
+          }
+
+        </div>
+      </div> */}
 
       {/* <div className="container text-center mt-5">
         <h1>Habitaciones</h1>

@@ -4,6 +4,7 @@ import { Modal } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { MdDeleteForever } from 'react-icons/md'
 import { BsPencilSquare } from 'react-icons/bs'
+import swal from 'sweetalert' 
 const axios = require('axios')
 
 const TipoProducto = () => {
@@ -18,10 +19,7 @@ const TipoProducto = () => {
     setModoEdicion(false)
     limpiarInput()
   }
-  const handleCloseFormulario = () => {
-    setShowFormulario(false)
-
-  }
+  const handleCloseFormulario = () => setShowFormulario(false)
   const { handleSubmit } = useForm()
   const [modoEdicion, setModoEdicion] = useState([])
 
@@ -32,14 +30,14 @@ const TipoProducto = () => {
   const limpiarInput = () => setDescripcion('')
 
   useEffect(() => {
-    axios.get('http://localhost:3001/obtenerTipoProducto')
+    axios.get('http://hostalservidor.herokuapp.com/obtenerTipoProducto')
       .then(response => {
         setTipoProducto(response.data)
       })
-  }, [tipoProducto])
+  }, [])
 
   const agregarTipoProducto = () => {
-    axios.post('http://localhost:3001/agregarTipoProducto', {
+    axios.post('http://hostalservidor.herokuapp.com/agregarTipoProducto', {
       descripcion: descripcion
     })
     handleCloseFormulario()
@@ -53,7 +51,7 @@ const TipoProducto = () => {
   }
 
   const editarTipoProducto = () => {
-    axios.put(`http://localhost:3001/updateTipoProducto/${idTipoProducto}`, {
+    axios.put(`http://hostalservidor.herokuapp.com/updateTipoProducto/${idTipoProducto}`, {
       id_tipo_prod: idTipoProducto,
       descripcion: descripcion
     })
@@ -64,8 +62,19 @@ const TipoProducto = () => {
     modoEdicion ? editarTipoProducto() : agregarTipoProducto()
   }
 
-  const eliminarTipoProducto = (idTipoProducto) => {
-    axios.delete(`http://localhost:3001/deleteTipoProducto/${idTipoProducto}`)
+  const eliminarTipoProducto = async (idTipoProducto) => {
+    await swal({
+      title: 'ELIMINAR TIPO PRODUCTO',
+      text: 'esta seguro que desea eliminar',
+      icon: 'warning',
+      buttons: ['cancelar', 'aceptar']
+    }).then(response => {
+      if (response) {
+        axios.delete(`http://hostalservidor.herokuapp.com/deleteTipoProducto/${idTipoProducto}`)
+        swal({ text: 'eliminado con exito', icon: 'success', timer: '2000' })
+      }
+    })
+    
   }
 
   return (
@@ -85,8 +94,9 @@ const TipoProducto = () => {
         onHide={handleCloseTable}
         size='xl'
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Tipo Producto</Modal.Title>
+        <Modal.Header className="bg-dark ">
+          <Modal.Title className="text-white text-uppercase mx-auto">Tipo Producto</Modal.Title>
+          <p className="text-white mt-2" onClick={handleCloseTable} style={{ cursor: 'pointer' }}>X</p>
         </Modal.Header>
         <Modal.Body>
           <div className="container">
@@ -94,9 +104,9 @@ const TipoProducto = () => {
               <div className="col-lg-4 offset-lg-8">
                 <button className="btn btn-success" onClick={handleShowFormulario}>Agregar Tipo Producto</button>
               </div>
-              <div className="col-lg-10 offset-lg-1 mt-3">
+              <div className="col-lg-10 offset-lg-1 mt-5">
                 <table className="table">
-                  <thead className="table-dark">
+                  <thead className="table-dark text-uppercase">
                     <tr>
                       <th>Identificador</th>
                       <th>Tipo Producto</th>
@@ -107,19 +117,19 @@ const TipoProducto = () => {
                     {
                       tipoProducto.map(item => {
                         return (
-                          <tr>
+                          <tr key={item.id_tipo_prod}>
                             <td>{item.id_tipo_prod}</td>
                             <td>{item.descripcion}</td>
                             <td>
                               <MdDeleteForever
                                 size="2em" color="red"
-                                style={{ cursor: 'pointer' }}
                                 onClick={() => eliminarTipoProducto(item.id_tipo_prod)}
+                                style={{ cursor:'pointer', marginRight: '12px' }}
                               />
                               <BsPencilSquare
                                 size="1.8em" color="orange"
-                                style={{ cursor: 'pointer' }}
                                 onClick={() => activarModoEdicion(item)}
+                                style={{ cursor: 'pointer' }}
                               />
                             </td>
 
@@ -140,8 +150,8 @@ const TipoProducto = () => {
         centered
         onHide={handleCloseFormulario}
       >
-        <Modal.Header closeButton>
-          <Modal.Title>{modoEdicion ? 'Editar Tipo Producto' :  'Agregar Tipo Producto'}</Modal.Title>
+        <Modal.Header className={modoEdicion ? "bg-warning" : "bg-success"}>
+          <Modal.Title className="text-white text-uppercase mx-auto">{modoEdicion ? 'Editar Tipo Producto' :  'Agregar Tipo Producto'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit(onSubmit)} >

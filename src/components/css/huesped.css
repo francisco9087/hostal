@@ -1,0 +1,9 @@
+.contenedor-form-huesped > .row> .contenedor-card-huesped > .card-huesped {
+  background: rgba(0,0,0,.49);
+}
+
+
+.contenedor-card-sel-empresa > .card-sel-empresa {
+  height: 345px;
+  background: rgba(0,0,0,.49);
+}

@@ -4,6 +4,7 @@ import { Modal } from 'react-bootstrap'
 import { MdDeleteForever } from 'react-icons/md'
 import { BsPencilSquare } from 'react-icons/bs'
 import { useForm } from 'react-hook-form'
+import swal from 'sweetalert'
 const axios = require('axios')
 
 const TipoHabitacion = () => {
@@ -64,8 +65,19 @@ const TipoHabitacion = () => {
     modoEdicion ? editarTipoHabitacion() : agregarTipoHabitacion()
   }
 
-  const deleteTipoHabitacion = (idTipoHabitacion) => {
-    axios.delete(`http://hostalservidor.herokuapp.com/deleteTipoHabitacion/${idTipoHabitacion}`)
+  const deleteTipoHabitacion = async (idTipoHabitacion) => {
+    await swal({
+      title: 'ELIMINAR TIPO HABITACIÓN',
+      text: 'esta seguro que desea eliminar',
+      icon: 'warning',
+      buttons: ['cancelar', 'aceptar']
+    }).then(response => {
+      if (response) {
+        axios.delete(`http://hostalservidor.herokuapp.com/deleteTipoHabitacion/${idTipoHabitacion}`)
+        swal({ text: 'eliminado con exito', icon: 'success', timer: '2000' })
+      }
+    })
+   
   }
 
   return (
@@ -87,18 +99,19 @@ const TipoHabitacion = () => {
         size="xl"
 
       >
-        <Modal.Header closeButton className="bg-dark">
+        <Modal.Header className="bg-dark">
           <Modal.Title className="text-uppercase text-white mx-auto">Listado Tipo Habitación</Modal.Title>
+          <p className="text-white mt-2" onClick={handleCloseTable} style={{ cursor: 'pointer' }}>X</p>
         </Modal.Header>
         <Modal.Body>
           <div className="container">
             <div className="row">
               <div className="col-lg-4 offset-lg-8">
-                <button className="btn btn-success" onClick={handleShowFormulario}>Agregar Tipo Habitación</button>
+                <button className="btn btn-success " onClick={handleShowFormulario}>Agregar Tipo Habitación</button>
               </div>
-              <div className="col-lg-10 offset-lg-1">
+              <div className="col-lg-10 offset-lg-1 mt-5">
                 <table className="table">
-                  <thead>
+                  <thead className="table-dark">
                     <tr>
                       <th className="text-uppercase">Identificador</th>
                       <th className="text-uppercase">Tipo Habitación</th>
@@ -109,7 +122,7 @@ const TipoHabitacion = () => {
                     {
                       tipoHabitacion.map(item => {
                         return (
-                          <tr>
+                          <tr key={item.id_tipo_habitacion}>
                             <td>{item.id_tipo_habitacion}</td>
                             <td>{item.descripcion}</td>
                             <td>
@@ -146,7 +159,7 @@ const TipoHabitacion = () => {
         onHide={handleCloseFormulario}
 
       >
-        <Modal.Header closeButton className={modoEdicion ? 'bg-warning' : 'bg-success'}>
+        <Modal.Header className={modoEdicion ? 'bg-warning' : 'bg-success'}>
           <Modal.Title className="text-uppercase text-white mx-auto">{modoEdicion ? 'Editar Tipo Habitación' : 'Agregar Tipo Habitación'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>

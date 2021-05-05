@@ -11,6 +11,11 @@
   background-color: rgb(194, 7, 7);
 }
 
+.contenedor-habi-num-mantencion {
+  margin-right: 10px;
+  background-color: rgb(251, 255, 10);
+}
+
 .ico-habitacion {
   height: 20%;
   width: 30%;
